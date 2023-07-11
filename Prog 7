@@ -1,0 +1,212 @@
+7. Design, develop and implement a C/C++/Java program to simulate the working of
+Shortest remaining time and Round Robin (RR) scheduling algorithms. Experiment with
+different quantum sizes for RR algorithm.
+7.c
+#include<stdio.h>
+#include<stdlib.h>
+struct schedule
+{
+char pid[20];
+int btime;
+int atime;
+int rtime;
+int stime;
+int etime;
+}r[20],temp;
+int n,qtime;
+
+void input()
+{
+int i;
+printf("PID\t\tAT\t\tBT\n");
+for(i=0;i<n;i++)
+{
+scanf("%s%d%d",r[i].pid,&r[i].atime,&r[i].btime);
+r[i].rtime=r[i].btime;
+}
+}
+void sort()
+{
+int i,j;
+for(i=0;i<n-1;i++) //Arrange the processes according to remaining time
+
+for(j=0;j<n-i-1;j++)
+if(r[j].rtime>r[j+1].rtime)
+{
+temp=r[j];
+r[j]=r[j+1];
+r[j+1]=temp;
+}
+
+else if(r[j].rtime==r[j+1].rtime)
+{
+if(r[j].atime>r[j+1].atime)
+{
+temp=r[j];
+r[j]=r[j+1];
+r[j+1]=temp;
+}
+}
+}
+
+void display()
+{
+int i,wt[10],tat[10],total_wt=0,total_tat=0;
+for(i=0;i<n;i++)
+{
+wt[i]=r[i].etime-r[i].btime-r[i].atime;
+total_wt=total_wt+wt[i];
+tat[i]=r[i].btime+wt[i];
+total_tat=total_tat+tat[i];
+}
+printf("\nPID\t\tBT\t\tWT\t\tTT\n");
+for(i=0;i<n;i++)
+
+{
+printf("%s\t\t%d\t\t%d\t\t%d\n",r[i].pid,r[i].btime,wt[i],tat[i]);
+}
+printf("Average waiting time is %f\n",(float)total_wt/n);
+printf("Average turnaround time is %f\n",(float)total_tat/n);
+}
+
+void srtf()
+{
+int t,c=0,i;
+sort();
+t=r[0].atime;
+for(i=1;i<n;i++) //To find the process that arrived first
+if(t>r[i].atime)
+t=r[i].atime;
+
+printf("|%d|",t);
+while(c<n)
+{
+i=0;
+//Find a process that has arrived by t and it is not yet finished
+while((r[i].atime>t||r[i].rtime==0)&&i<n)
+i++;
+t++;
+r[i].etime=t;
+r[i].rtime=r[i].rtime-1;
+printf("%s\t\t|%d|",r[i].pid,r[i].etime);
+if(r[i].rtime==0)
+c++;
+sort();
+}
+
+display();
+}
+
+void rr()
+{
+int j=0,c=0,i;
+for(i=0;i<n-1;i++)
+for(j=0;j<n-1-i;j++)
+if(r[i].atime>r[i+1].atime)
+{
+temp=r[i];
+r[i]=r[i+1];
+r[i+1]=temp;
+}
+
+r[0].stime=r[0].etime=r[0].atime;
+printf("|%d|",r[0].stime);
+while(c<n)
+{
+i=0;
+while(i<n)
+{
+if(r[i].rtime>qtime) //if remaining time is greater than quantum time
+{
+r[i].stime=r[j].etime;
+r[i].etime=r[i].stime+qtime;
+r[i].rtime=r[i].rtime-qtime;
+printf("%s\t\t|%d|",r[i].pid,r[i].etime);
+j=i;
+i++;
+}
+
+else if(r[i].rtime!=0)
+{
+r[i].stime=r[j].etime;
+r[i].etime=r[i].stime+r[i].rtime;
+r[i].rtime=0;
+printf("%s\t\t|%d|",r[i].pid,r[i].etime);
+j=i;
+i++;
+c++;
+}
+else
+i++;
+
+}
+}
+display();
+}
+
+int main()
+{
+int i,ch;
+printf("Enter the number of processes\n");
+scanf("%d",&n);
+printf("1.SRTF 2.ROUNDROBIN\n");
+printf("Enter your choice\n");
+scanf("%d",&ch);
+switch(ch)
+{
+case 1: input();
+srtf();
+break;
+
+case 2: input();
+printf("Enter the quantum time\n");
+scanf("%d",&qtime);
+rr();
+break;
+default: printf("Enter your choice(1or2)");
+}
+return 0;
+}
+
+Execution Steps:
+cc 7.c
+./a.out
+Output:
+RUN1:
+Enter the number of processes
+3
+1.SRTF 2.ROUNDROBIN
+Enter your choice
+1
+PID AT BT
+P1 0 6
+P2 2 4
+P3 4 2
+|0| P1 |1| P1 |2|P1 |3|P1 |4|P1 |5|P1 |6|P3 |7|P3 |8|P2 |9|P2 |10|P2 |11|P2 |12|
+
+PID BT WT TAT
+P1 6 0 6
+P2 4 6 10
+P3 2 2 4
+Average waiting time is 2.666667
+Average turnaround time is 6.666667
+
+RUN2:
+Enter the number of processes
+3
+1.SRTF 2.ROUNDROBIN
+Enter your choice
+2
+PID AT BT
+P1 0 6
+P2 2 4
+P3 4 2
+Enter the quantum time 2
+|0| P1 |2| P2 |4|P3 |6|P1 |8|P2 |10|P1 |12|
+
+PID BT WT TAT
+P1 6 6 12
+P2 4 4 8
+P3 2 0 2
+Average waiting time is 3.3333
+Average turnaround time is 7.33333
