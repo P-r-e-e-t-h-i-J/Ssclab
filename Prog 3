@@ -1,0 +1,185 @@
+3. Design, develop and implement YACC/C program to construct Predictive / LL(1) Parsing Table for
+the grammar rules: A →aBa , B →bB | ε. Use this table to parse the sentence: abba$
+3.c
+#include<stdio.h>
+#include<string.h>
+char prod[3][15]={"A->aBa","B->bB","B->@"};
+char table[2][3][3]={
+{"aBa","",""},
+{"@","bB",""}
+}; //Parsing table
+int size[2][3]={3,0,0,1,2,0},n;
+char s[20],stack[20];
+char action[20];
+int flag=0;
+char c;
+void display(int i,int j)
+{
+int k;
+if(flag)
+{
+printf("%s",action);
+printf("\n");
+}
+for(k=0;k<=i;k++)
+printf("%c",stack[k]);
+printf("\t");
+for(k=j;k<n;k++)
+printf("%c",s[k]); // Display contents of input buffer
+printf("\t");
+flag=1;
+}
+void main()
+{
+int i,j,k,row,col;
+printf("\nThe grammar is:\n");
+for(i=0;i<3;i++)
+printf("%s\n",prod[i]);
+printf("\nPredictive parsing table is\n\n");
+
+printf("\ta\tb\t$\n");
+printf("________________________\n"); //Display parsing table
+for(i=0;i<2;i++)
+{
+if(i==0)
+printf("A");
+else
+printf("\nB");
+for(j=0;j<3;j++)
+{
+printf("\t%s",table[i][j]);
+}
+}
+printf("\nEnter the input string:");
+scanf("%s",s);
+strcat(s,"$");
+n=strlen(s);
+stack[0]='$'; // Initializing stack with $
+stack[1]='A'; // Push the start symbol A on top of $
+i=1;
+j=0;
+printf("\nStack\tInput\tAction");
+printf("\n______________________\n");
+display(i,j);
+while(1)
+{
+if(stack[i]==s[j]) // if stack top and current input symbol are same
+{
+strcpy(action,"match");
+c=stack[i];
+strcat(action,&c);
+i--;
+j++;
+if(stack[i]=='$'&&s[j]=='$') //if both input buffer and stack are empty
+{
+printf("%s",action);
+printf("\n$\t$\tSUCCESS\n");
+break;
+
+}
+else
+if(stack[i]=='$'&&s[j]!='$')
+{
+printf("ERROR\n");
+break;
+}
+display(i,j);
+}
+switch(stack[i])
+{
+case 'A': row=0;
+break;
+case 'B': row=1;
+break;
+}
+switch(s[j])
+{
+case 'a': col=0;
+break;
+case 'b': col=1;
+break;
+case '$': col=2;
+break;
+
+}
+if(table[row][col][0]=='\0')
+{
+printf("\nERROR\n");
+break;
+}
+else if(table[row][col][0]=='@')
+{
+i--;
+strcpy(action,"OutputB->@");
+display(i,j);
+}
+else
+{
+
+strcpy(action,"Output");
+if(stack[i]=='A')
+strcat(action,prod[0]);
+else
+strcat(action,prod[1]);
+for(k=size[row][col]-1;k>=0;k--)
+{
+stack[i]=table[row][col][k];
+i++;
+}
+i--;
+display(i,j);
+}
+}
+}
+
+Execution Steps:
+cc 3.c
+./a.out
+
+Output
+RUN 1:
+
+The grammar is:
+A->aBa
+B->bB
+B->@
+Predictive parsing table is
+a b $
+________________________
+A aBa
+B @ bB
+Enter the input string: abbba
+Stack Input Action
+_____________________________
+$A abbba$ Output A->aBa
+$aBa abbba$ match a
+$aB bbba$ Output B->bB
+
+$aBb bbba$ match b
+$aB bba$ Output B->bB
+$aBb bba$ match b
+$aB ba$ Output B->bB
+$aBb ba$ match b
+$aB a$ Output B->@
+$a a$ match a
+$ $ SUCCESS
+
+RUN 2:
+
+The grammar is:
+A->aBa
+B->bB
+B->@
+Predictive parsing table is
+a b $
+________________________
+A aBa
+B @ bB
+Enter the input string: ab
+Stack Input Action
+________________________________
+$A ab$ Output A->aBa
+$aBa ab$ match a
+$aB b$ Output B->bB
+$aBb b$ match b
+$aB $
