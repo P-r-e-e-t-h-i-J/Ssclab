@@ -1,0 +1,153 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<TextView
+android:layout_width="197dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="102dp" android:layout_marginBottom="616dp" android:text="SIGNUP ACTIVITY" android:textSize="20dp" android:textColor="@color/purple_700" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+<TextView
+android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="278dp" android:layout_marginBottom="505dp" android:text="User Name" android:textColor="@color/purple_500" android:textSize="15dp" />
+ 
+
+<TextView
+android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="287dp" android:layout_marginBottom="430dp" android:text="Password" android:textColor="@color/purple_500" android:textSize="15dp" />
+
+<EditText
+android:id="@+id/emailTextId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="20dp" android:layout_marginBottom="506dp" android:ems="10" android:inputType="textEmailAddress" />
+
+<EditText
+android:id="@+id/passwordTextId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="18dp" android:layout_marginBottom="427dp" android:ems="10" android:inputType="textPassword" />
+
+<Button
+android:id="@+id/signupButId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="154dp" android:layout_marginBottom="315dp" android:onClick="signUp" android:backgroundTint="@color/cardview_dark_background" android:text="SIGN UP" />
+
+</RelativeLayout>
+
+activity_login_activity.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity">
+ 
+
+<TextView
+android:layout_width="197dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="102dp" android:layout_marginBottom="616dp" android:text="LOGIN ACTIVITY" android:textSize="20dp" android:textColor="@color/purple_700" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+<TextView
+android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="272dp" android:layout_marginBottom="505dp" android:text="User Name" android:textColor="@color/purple_500" android:textSize="15dp" />
+
+<TextView
+android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="277dp" android:layout_marginBottom="425dp" android:text="Password" android:textColor="@color/purple_500" android:textSize="15dp" />
+
+<EditText
+android:id="@+id/emailTextId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="20dp" android:layout_marginBottom="506dp" android:ems="10" android:inputType="textEmailAddress" />
+
+<EditText
+android:id="@+id/passwordTextId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="18dp" android:layout_marginBottom="427dp"
+ 
+android:ems="10" android:inputType="textPassword" />
+
+<Button
+android:id="@+id/loginButId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="154dp" android:layout_marginBottom="315dp" android:onClick="login" android:backgroundTint="@color/cardview_dark_background" android:text="LOGIN" />
+
+</RelativeLayout>
+
+activity_home_page.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".HomePageActivity">
+
+<TextView
+android:id="@+id/textView3" android:layout_width="221dp" android:layout_height="30dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="68dp" android:layout_marginBottom="388dp" android:text="Successful Login" android:textColor="@color/purple_700" android:textSize="25dp" android:textStyle="bold" />
+</RelativeLayout>
+
+MainActivity.java
+
+package com.example.lab03;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent; import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast; import java.util.regex.Pattern;
+
+public class MainActivity extends AppCompatActivity {
+public EditText emailId, password; public Button signupBut;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+ 
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+emailId = (EditText) findViewById(R.id.emailTextId); password = (EditText) findViewById(R.id.passwordTextId); signupBut = (Button)findViewById(R.id.signupButId);
+}
+public void signUp(View v)
+{
+String email = emailId.getText().toString(); String pass = password.getText().toString(); if(isPasswordValid(pass))
+{
+Intent intent = new Intent(MainActivity.this,LoginActivty.class); Bundle bun = new Bundle();
+bun.putString("EMAIL",email); bun.putString("PASSWORD",pass); intent.putExtra("SIGNUPBUNDLE",bun); startActivity(intent);
+}
+else
+{
+Toast.makeText(this,"Enter Proper Password",Toast.LENGTH_LONG).show();
+}
+}
+
+private boolean isPasswordValid(String pass)
+{
+Pattern lower = Pattern.compile("^.*[a-z].*$");
+
+Pattern upper = Pattern.compile("^.*[A-Z].*$"); Pattern digits = Pattern.compile("^.*[0-9].*$");
+Pattern special = Pattern.compile("^.*[^a-zA-Z0-9].*$");
+if(pass.length() < 8)
+return false; if(!lower.matcher(pass).matches())
+return false; if(!upper.matcher(pass).matches())
+return false; if(!digits.matcher(pass).matches())
+return false; if(!special.matcher(pass).matches())
+return false;
+
+return true;
+}
+}
+
+LoginActivity.java
+package com.example.lab03;
+import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent; import android.os.Bundle; import android.view.View; import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+
+public class LoginActivty extends AppCompatActivity {
+public EditText emailId, password;
+ 
+public Button loginBut;
+public String regEmail,regPass; int counter = 2;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_login_activty); emailId = (EditText) findViewById(R.id.emailTextId); password = (EditText) findViewById(R.id.passwordTextId); loginBut = (Button)findViewById(R.id.loginButId); Intent intent = getIntent();
+Bundle bun = intent.getBundleExtra("SIGNUPBUNDLE");
+regEmail = bun.getString("EMAIL");
+regPass = bun.getString("PASSWORD");
+}
+
+public void login(View v)
+{
+String email = emailId.getText().toString(); String pass = password.getText().toString(); if(regEmail.equals(email) && regPass.equals(pass))
+{
+Intent intent = new Intent(LoginActivty.this,HomePageActivity.class); startActivity(intent);
+}
+else
+{
+Toast.makeText(this,"Login Failed",Toast.LENGTH_LONG).show();
+}
+counter--; if(counter == 0)
+{
+Toast.makeText(this,"Failed Login Attempts",Toast.LENGTH_LONG).show(); loginBut.setEnabled(false);
+}
+}
+}
+
+HomePageActivity.java
+package com.example.lab03;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+public class HomePageActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) {
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_home_page);
+}
+}
