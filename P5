@@ -1,0 +1,69 @@
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<TextView
+android:layout_width="398dp" android:layout_height="61dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="5dp" android:layout_marginBottom="542dp" android:gravity="center" android:text="Counter Application" android:textColor="@color/purple_700" android:textSize="30dp" android:textStyle="bold"
+app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent" />
+
+<Button
+android:id="@+id/startButId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="157dp" android:layout_marginBottom="341dp" android:backgroundTint="@color/black"
+ 
+android:onClick="startButClick" android:text="START" />
+
+<Button
+android:id="@+id/stopButId" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="155dp" android:layout_marginBottom="248dp" android:backgroundTint="@color/black" android:onClick="stopButClick" android:text="STOP" />
+
+<TextView
+android:id="@+id/counterTV" android:layout_width="182dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="109dp" android:layout_marginBottom="456dp" android:text="Counter Value" android:gravity="center" android:textColor="@color/purple_200" android:textSize="20dp" android:textStyle="bold" />
+
+</RelativeLayout>
+
+
+MainActivity.java
+package com.example.lab05;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle; import android.os.Handler; import android.os.Message; import android.view.View; import android.widget.Button; import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity { Button startButId,stopButId;
+TextView tv;
+int countValue = 0; boolean flag = false; @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+startButId = (Button)findViewById(R.id.startButId); stopButId = (Button)findViewById(R.id.stopButId); tv = (TextView) findViewById(R.id.counterTV);
+}
+public void startButClick(View v)
+ 
+{
+countValue = 0;
+flag = true;
+Thread countThread = new Thread(){
+public void run()
+{
+while(flag)
+{
+countValue++; handler.sendEmptyMessage(countValue); try {
+Thread.sleep(1000);
+}
+catch(Exception e) { }
+
+}
+}
+};
+countThread.start();
+}
+public void stopButClick(View v)
+{
+flag = false;
+}
+Handler handler=new Handler()
+{
+public void handleMessage(Message m)
+{
+tv.setText(String.valueOf(m.what));
+}
+};
+
+}
