@@ -1,0 +1,143 @@
+activity_main.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<TextView
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="0dp" android:layout_marginBottom="575dp" android:text="PARSING XML AND JSON DATA" android:textColor="@color/purple_700" android:textSize="25dp" android:gravity="center" android:textStyle="bold"
+ 
+app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
+
+app:layout_constraintTop_toTopOf="parent" />
+
+<Button
+android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="126dp" android:layout_marginBottom="457dp" android:backgroundTint="@color/cardview_shadow_start_color" android:onClick="xml"
+android:text="Parse XML Data" />
+
+<Button
+android:id="@+id/button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="123dp" android:layout_marginBottom="328dp" android:backgroundTint="@color/cardview_shadow_start_color" android:onClick="json"
+android:text="Parse JSON Data" />
+
+</RelativeLayout>
+MainActivity.java
+package com.example.lab06;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent; import android.os.Bundle; import android.view.View;
+public class MainActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+public void xml(View view)
+{
+Intent intent = new Intent(getApplicationContext(),ParseActivity.class); intent.putExtra("FILE","XML");
+startActivity(intent);
+}
+
+public void json(View view)
+{
+Intent intent = new Intent(getApplicationContext(),ParseActivity.class); intent.putExtra("FILE","JSON");
+ 
+startActivity(intent);
+}
+}
+
+activity_parse.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".ParseActivity">
+
+<TextView
+android:id="@+id/textView" android:layout_width="match_parent" android:layout_height="44dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="0dp" android:layout_marginBottom="628dp" android:text="PARSING XML AND JSON DATA" android:textColor="@color/purple_700" android:textSize="25dp" android:gravity="center" android:textStyle="bold" />
+
+
+<TextView
+android:id="@+id/textView2" android:layout_width="133dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="278dp" android:layout_marginBottom="550dp" android:text="XML DATA" android:textColor="@color/purple_500" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/xmlTVId" android:layout_width="200dp" android:layout_height="219dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="211dp" android:layout_marginBottom="278dp" android:text="XML Data" android:textColor="@color/purple_200" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/textView4" android:layout_width="wrap_content"
+ 
+android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="100dp" android:layout_marginBottom="548dp" android:text="JSON DATA" android:textColor="@color/purple_500" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/jsonTVId" android:layout_width="198dp" android:layout_height="223dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="5dp" android:layout_marginBottom="273dp" android:text="JSON Data" android:textColor="@color/purple_200" android:textSize="20dp" android:textStyle="bold" />
+</RelativeLayout>
+
+
+ParseActivity.java
+package com.example.lab06;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent; import android.os.Bundle; import android.widget.TextView;
+
+import org.json.JSONObject; import org.w3c.dom.Document; import org.w3c.dom.Element; import org.w3c.dom.Node; import org.w3c.dom.NodeList;
+
+import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+public class ParseActivity extends AppCompatActivity { TextView xmlTV, jsonTV;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_parse);
+Intent intent = getIntent();
+String mode = intent.getStringExtra("FILE"); xmlTV = (TextView)findViewById(R.id.xmlTVId); jsonTV = (TextView)findViewById(R.id.jsonTVId); if(mode.equals("XML"))
+parseXML();
+else if(mode.equals("JSON"))
+ 
+parseJSON();
+}
+
+public void parseXML()
+{
+try {
+InputStream is = getAssets().open("input.xml");
+DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+Document doc = dBuilder.parse(is); Element element=doc.getDocumentElement(); element.normalize();
+NodeList nList = doc.getElementsByTagName("employee");
+for (int i = 0;	i<nList.getLength(); i++) { Node node = nList.item(i);
+if (node.getNodeType() == Node.ELEMENT_NODE)
+{
+ 
+
+
+element2)+"\n");
+
+
+element2)+"\n");
+
+element2)+"\n");
+
+}
+}
+}
+ 
+Element element2 = (Element) node;
+xmlTV.setText("City Name : " + getValue("city_name",
+
+xmlTV.append("Latitude : " + getValue("Latitude", element2)+"\n");
+xmlTV.append("Longitude : " + getValue("Longitude", xmlTV.append("Temperature : " + getValue("Temperature", xmlTV.append("Humidity : " + getValue("Humidity", element2)+"\n");
+ 
+catch (Exception e) { e.printStackTrace();
+}
+}
+private static String getValue(String tag, Element element) {
+NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes(); Node node = nodeList.item(0);
+return node.getNodeValue();
+}
+public void parseJSON()
+{
+try {
+InputStream inputStream=getAssets().open("input.json"); byte[] data=new byte[inputStream.available()]; inputStream.read(data);
+String readData=new String(data);
+JSONObject jsonObject=new JSONObject(readData);
+JSONObject jsonObject1=jsonObject.getJSONObject("employee"); jsonTV.setText("City Name:"+jsonObject1.getString("city_name")+"\n"); jsonTV.append("Latitude:"+jsonObject1.getString("Latitude")+"\n"); jsonTV.append("Longitude"+jsonObject1.getString("Longitude")+"\n"); jsonTV.append("Temperature:"+jsonObject1.getInt("Temperature")+"\n"); jsonTV.append("Humidity"+jsonObject1.getString("Humidity")+"\n");
+}
+catch (Exception e) { e.printStackTrace();
+}
+}
+}
