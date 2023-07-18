@@ -1,0 +1,53 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<TextView
+android:id="@+id/textView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="152dp" android:layout_marginBottom="599dp" android:gravity="center" android:text="Vemana Institute of Technology" android:textColor="#F00F" android:textSize="30dp" android:textStyle="bold" />
+
+<ImageView
+android:id="@+id/imageView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="18dp" android:layout_marginBottom="572dp" app:srcCompat="@drawable/vemana" />
+
+<View
+android:id="@+id/view" android:layout_width="wrap_content" android:layout_height="4dp" android:layout_alignParentBottom="true" android:layout_marginBottom="564dp" android:background="#4444" />
+
+<TextView
+android:id="@+id/textView2" android:layout_width="342dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="40dp" android:layout_marginBottom="502dp" android:text="Dr. Ramakrishna M" android:gravity="center" android:textSize="30dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/textView3" android:layout_width="347dp" android:layout_height="wrap_content"
+ 
+android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="37dp" android:layout_marginBottom="456dp" android:gravity="center" android:text="Professor, HOD, Dept. of CSE" android:textSize="20dp" android:textStyle="bold" />
+
+<View
+android:id="@+id/view1" android:layout_width="wrap_content" android:layout_height="4dp" android:layout_alignParentBottom="true" android:layout_marginBottom="437dp" android:background="#4444" />
+
+<TextView
+android:id="@+id/textView4" android:layout_width="347dp" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="39dp" android:layout_marginBottom="389dp" android:gravity="center" android:text="9686725572" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/textView5" android:layout_width="344dp" android:layout_height="38dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="40dp" android:layout_marginBottom="332dp" android:gravity="center" android:text="Bengaluru" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/textView6" android:layout_width="382dp" android:layout_height="49dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="11dp" android:layout_marginBottom="268dp" android:gravity="center" android:text="Email:ramakrishna@vemanait.edu.in" android:textSize="20dp" android:textStyle="bold" />
+
+<TextView
+android:id="@+id/textView7" android:layout_width="382dp"
+ 
+android:layout_height="49dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:layout_marginEnd="12dp" android:layout_marginBottom="207dp" android:gravity="center" android:text="Website:https://vemanait.edu.in/" android:textSize="20dp" android:textStyle="bold" />
+
+</RelativeLayout>
+
+MainActivity.java
+
+package com.example.lab01;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+public class MainActivity extends AppCompatActivity { @Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+}
+}
